@@ -28,14 +28,6 @@ if __name__ == "__main__":
             else:
                 republican_word_frequency[word] = republican_word_frequency[word] + 1
 
-    # Sort the words by their frequency
-    sorted_frequency = sorted(republican_word_frequency.items(),key=lambda x: x[1], reverse=True)
-
-    # Print the 50 most used phrases
-    j = 0
-    for i in sorted_frequency:
-        print(i[0], i[1])
-
-        j += 1
-        if j == 50:
-            break
+    output_data = pd.DataFrame(list(democrat_word_frequency.items()))
+    output_data.columns = ['Word','Frequency']
+    output_data.to_csv('./Generated Data/RepublicanWordFrequency.csv',index=False)
