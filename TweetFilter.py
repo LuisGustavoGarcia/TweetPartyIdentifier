@@ -48,6 +48,15 @@ def find_word_frequency(tweets):
 
     return word_frequency
 
+'''
+    This script will create a csv. file which will store the words found in a number of tweets
+    belonging to Congress members of both the Republican and Democratic parties, the frequency
+    at which the words were found, and which party the word was used by.
+
+    Before running this script, it's important that ./Generated Data/CongressMemberTwitterHandles.csv
+    is populated with the Twitter Handles of all possible Congress members.
+    See: './CongressMemberAccountFinder.py'
+'''
 if __name__ == "__main__":
     api = twitter.Api(consumer_key='O1TcM1r6K0hKZ7bnpjslpxaG5',
                   consumer_secret='4gSL38BmKvs63PU3lucl7e4Gz60sTWPnnoxQ3IBO2vEjFxJI9U',
@@ -82,5 +91,21 @@ if __name__ == "__main__":
     # Create list of all words, so we can assign them an index. i.e x1 - xn
     all_words = []
     all_words.extend(democrat_word_frequency.keys())
+    all_words.extend(republican_word_frequency.keys())
+
+    # Note, I can get away with this because Dictionaries are ordered in Python 3.6.* and higher
+    all_values = []
+    all_values.extend(democrat_word_frequency.values())
+    all_values.extend(republican_word_frequency.values())
+
+    party_affiliation = []
+    for i in range(0, len(democrat_word_frequency.keys())):
+        party_affiliation.append('Democrat')
+    for i in range(0, len(republican_word_frequency.keys())):
+        party_affiliation.append('Republican')
+
+    output_data = pd.DataFrame([all_words, all_values, party_affiliation]).transpose()
+    output_data.columns = ['Word','Frequency', 'Party Affiliation']
+    output_data.to_csv('./Generated Data/WordFrequencyAndAffiliation.csv',index=False)
 
     
