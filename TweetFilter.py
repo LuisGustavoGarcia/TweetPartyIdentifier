@@ -53,6 +53,9 @@ def find_word_frequency(tweets):
     belonging to Congress members of both the Republican and Democratic parties, the frequency
     at which the words were found, and which party the word was used by.
 
+    The amount of tweets per congress member which are used can be altered in the variable
+    'num_of_tweets'.
+
     Before running this script, it's important that ./Generated Data/CongressMemberTwitterHandles.csv
     is populated with the Twitter Handles of all possible Congress members.
     See: './CongressMemberAccountFinder.py'
@@ -70,15 +73,16 @@ if __name__ == "__main__":
     # Find List of Republican Congress Member's Twitter Handles.
     republican_twitter_handles = find_twitter_handles('Republicans')
 
+    # Number of tweets per member which should be analyzed
+    num_of_tweets = 2
+
     # Find Democrat Member's Tweets
     democrat_tweets = []
-    num_of_tweets = 2 # Per Member
     for handle in democrat_twitter_handles:
         democrat_tweets.extend(find_tweets(api, handle, num_of_tweets))
     
     # Find Republican Member's Tweets
     republican_tweets = []
-    num_of_tweets = 2 # Per Member
     for handle in republican_twitter_handles:
         republican_tweets.extend(find_tweets(api, handle, num_of_tweets))
     
