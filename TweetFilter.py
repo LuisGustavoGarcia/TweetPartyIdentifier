@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 import re
 import twitter
@@ -61,6 +60,7 @@ def find_word_frequency(tweets):
     See: './CongressMemberAccountFinder.py'
 '''
 if __name__ == "__main__":
+    print('Started Routine')
     api = twitter.Api(consumer_key='O1TcM1r6K0hKZ7bnpjslpxaG5',
                   consumer_secret='4gSL38BmKvs63PU3lucl7e4Gz60sTWPnnoxQ3IBO2vEjFxJI9U',
                   access_token_key='1331694691256070144-nks9sd74IiAyt8e4CCHktQwUNTDBor',
@@ -76,21 +76,46 @@ if __name__ == "__main__":
     # Number of tweets per member which should be analyzed
     num_of_tweets = 2
 
-    # Find Democrat Member's Tweets
+    # Find & store Democrat Member's Tweets
     democrat_tweets = []
     for handle in democrat_twitter_handles:
         democrat_tweets.extend(find_tweets(api, handle, num_of_tweets))
-    
-    # Find Republican Member's Tweets
+
+    output_data = pd.DataFrame([democrat_tweets]).transpose()
+    output_data.columns = ['Tweet']
+    output_data.to_csv('./Generated Data/DemocratTweets.csv',index=False)
+        
+    # Find & store Republican Member's Tweets
     republican_tweets = []
     for handle in republican_twitter_handles:
         republican_tweets.extend(find_tweets(api, handle, num_of_tweets))
+
+    output_data = pd.DataFrame([republican_tweets]).transpose()
+    output_data.columns = ['Tweet']
+    output_data.to_csv('./Generated Data/RepublicanTweets.csv',index=False)
     
     # Find Democrat's word frequency
     democrat_word_frequency = find_word_frequency(democrat_tweets)
 
     # Find Republican's word frequency
     republican_word_frequency = find_word_frequency(republican_tweets)
+
+    # Remove words that only occur once, these are outliers.
+    # This should only be enabled if the number of tweets you are examining is very large
+    # otherwise, you might potentially delete your entire dataset.
+    '''democrat_words_to_remove = []
+    republican_words_to_remove = []
+    for key in democrat_word_frequency.keys():
+        if democrat_word_frequency[key] == 1:
+            democrat_words_to_remove.append(key)
+    for key in republican_word_frequency.keys():
+        if republican_word_frequency[key] == 1:
+            republican_words_to_remove.append(key)
+
+    for key in democrat_words_to_remove:
+        del democrat_word_frequency[key]
+    for key in republican_words_to_remove:
+        del republican_word_frequency[key]'''
 
     # Create list of all words, so we can assign them an index. i.e x1 - xn
     all_words = []
@@ -111,5 +136,7 @@ if __name__ == "__main__":
     output_data = pd.DataFrame([all_words, all_values, party_affiliation]).transpose()
     output_data.columns = ['Word','Frequency', 'Party Affiliation']
     output_data.to_csv('./Generated Data/WordFrequencyAndAffiliation.csv',index=False)
+
+    print('Finished Routine')
 
     

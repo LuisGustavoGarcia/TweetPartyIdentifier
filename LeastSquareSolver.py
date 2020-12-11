@@ -2,8 +2,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-if __name__ == "__main__":
-    
 '''
     The goal is for f(x) = Likelyhood of being Democrat/Republican.
     i.e f(x) > 0 => a tweet's contents likely represent Democratic view points
@@ -42,3 +40,19 @@ if __name__ == "__main__":
     And make it possible to input a tweet manually to be analyzed as belonging
     to one party or another.(aka get its F(x) value)
 '''
+
+if __name__ == "__main__":
+
+    # Parse the data stored in csv format so we don't need to make calls to the
+    # twitter API every time.
+    csv_filepath = './Generated Data/WordFrequencyAndAffiliation.csv'
+    word_used_data_frame = pd.read_csv(csv_filepath, na_filter = False)
+
+    csv_filepath = './Generated Data/DemocratTweets.csv'
+    democrat_tweets_data_frame = pd.read_csv(csv_filepath, na_filter = False)
+
+    csv_filepath = './Generated Data/RepublicanTweets.csv'
+    republican_tweets_data_frame = pd.read_csv(csv_filepath, na_filter = False)
+
+    print(data_frame)
+    # Todo: Decompress the csv back into a list as necessary for the equation.
