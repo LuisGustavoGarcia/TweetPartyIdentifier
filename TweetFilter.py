@@ -59,7 +59,8 @@ def find_word_frequency(tweets):
     See: './CongressMemberAccountFinder.py'
 '''
 if __name__ == "__main__":
-    print('Started Routine')
+    print('Started Routine') # Added this because it can be a very a time-lengthy routine.
+
     api = twitter.Api(consumer_key='O1TcM1r6K0hKZ7bnpjslpxaG5',
                   consumer_secret='4gSL38BmKvs63PU3lucl7e4Gz60sTWPnnoxQ3IBO2vEjFxJI9U',
                   access_token_key='1331694691256070144-nks9sd74IiAyt8e4CCHktQwUNTDBor',
