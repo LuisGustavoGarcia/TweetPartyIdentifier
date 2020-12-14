@@ -54,5 +54,5 @@ if __name__ == "__main__":
     csv_filepath = './Generated Data/RepublicanTweets.csv'
     republican_tweets_data_frame = pd.read_csv(csv_filepath, na_filter = False)
 
-    print(data_frame)
+    print(word_used_data_frame)
     # Todo: Decompress the csv back into a list as necessary for the equation.

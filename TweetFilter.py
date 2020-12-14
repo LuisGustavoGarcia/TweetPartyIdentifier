@@ -18,6 +18,7 @@ def find_tweets(api, handle, num_of_tweets):
             for status in timeline:
                 tweets.append(str(status.full_text))
         except:
+            print('API Exception')
             pass
         return tweets
 
@@ -30,15 +31,13 @@ def find_word_frequency(tweets):
         filtered_tweet = regex.sub('', tweet).lower().split()
         words_used.extend(filtered_tweet)
 
-    words_set = set(words_used)
-
     # Read a list of non-indicative words we should ignore such as 'and' 'the' etc.
     f = open('./Generated Data/words_to_remove.txt', 'r')
     words_to_ignore = f.readline().split(',')
 
     # Index the words/phrases and how often they appear in tweets.
     word_frequency = {}
-    for word in words_set:
+    for word in words_used:
         if word not in words_to_ignore:
             if (word not in word_frequency):
                 word_frequency[word] = 1
@@ -74,7 +73,7 @@ if __name__ == "__main__":
     republican_twitter_handles = find_twitter_handles('Republicans')
 
     # Number of tweets per member which should be analyzed
-    num_of_tweets = 2
+    num_of_tweets = 100
 
     # Find & store Democrat Member's Tweets
     democrat_tweets = []
@@ -103,7 +102,7 @@ if __name__ == "__main__":
     # Remove words that only occur once, these are outliers.
     # This should only be enabled if the number of tweets you are examining is very large
     # otherwise, you might potentially delete your entire dataset.
-    '''democrat_words_to_remove = []
+    democrat_words_to_remove = []
     republican_words_to_remove = []
     for key in democrat_word_frequency.keys():
         if democrat_word_frequency[key] == 1:
@@ -115,7 +114,7 @@ if __name__ == "__main__":
     for key in democrat_words_to_remove:
         del democrat_word_frequency[key]
     for key in republican_words_to_remove:
-        del republican_word_frequency[key]'''
+        del republican_word_frequency[key]
 
     # Create list of all words, so we can assign them an index. i.e x1 - xn
     all_words = []
