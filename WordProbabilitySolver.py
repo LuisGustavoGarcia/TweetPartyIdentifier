@@ -26,14 +26,14 @@ if __name__ == "__main__":
         else:
             republican_word_frequencies[word] = frequency
 
-    # This is how we'd sort the dictionary by the frequency in Descending order.
-    # sorted_democrat_words = dict(sorted(democrat_word_frequencies.items(), key=lambda item: item[1], reverse=True))
-
     word_probabilities = {}
-    for word in democrat_word_frequencies.keys():
-        probability = 1
-        if word in republican_word_frequencies.keys():
+    for word in word_list:
+        if word in republican_word_frequencies.keys() and word in democrat_word_frequencies.keys():
             probability = democrat_word_frequencies[word]/(democrat_word_frequencies[word] + republican_word_frequencies[word])
+        elif word in democrat_word_frequencies.keys():
+            probability = 1
+        else:
+            probability = 0
         word_probabilities[word] = probability
 
     output_data = pd.DataFrame([word_probabilities.keys(), word_probabilities.values()]).transpose()
