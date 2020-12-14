@@ -117,26 +117,30 @@ if __name__ == "__main__":
     for key in republican_words_to_remove:
         del republican_word_frequency[key]
 
-    # Create list of all words, so we can assign them an index. i.e x1 - xn
-    all_words = []
-    all_words.extend(democrat_word_frequency.keys())
-    all_words.extend(republican_word_frequency.keys())
+    # Combine the frequencies into a single list.
+    republican_words = list(republican_word_frequency.keys())
+    democrat_words = list(democrat_word_frequency.keys())
+    print(republican_words)
+    print(democrat_words)
+    democrat_words.extend(republican_words)
+    word_list = set(democrat_words)
+    democrat_frequency_all = []
+    republican_frequency_all = []
+    for word in word_list:
+        if word in democrat_word_frequency.keys():
+            democrat_frequency_all.append(democrat_word_frequency[word])
+        else:
+            democrat_frequency_all.append(0)
 
-    # Note, I can get away with this because Dictionaries are ordered in Python 3.6.* and higher
-    all_values = []
-    all_values.extend(democrat_word_frequency.values())
-    all_values.extend(republican_word_frequency.values())
+        if word in republican_word_frequency.keys():
+            republican_frequency_all.append(republican_word_frequency[word])
+        else:
+            republican_frequency_all.append(0)
 
-    party_affiliation = []
-    for i in range(0, len(democrat_word_frequency.keys())):
-        party_affiliation.append('Democrat')
-    for i in range(0, len(republican_word_frequency.keys())):
-        party_affiliation.append('Republican')
-
-    output_data = pd.DataFrame([all_words, all_values, party_affiliation]).transpose()
-    output_data.columns = ['Word','Frequency', 'Party Affiliation']
-    output_data.to_csv('./Generated Data/WordFrequencyAndAffiliation.csv',index=False)
-
+    output_data = pd.DataFrame([list(word_list), democrat_frequency_all, republican_frequency_all]).transpose()
+    output_data.columns = ['Word','Democrat Frequency', 'Republican Frequency']
+    output_data.to_csv('./Generated Data/CombinedWordFrequency.csv',index=False)
+    
     print('Finished Routine')
 
     
