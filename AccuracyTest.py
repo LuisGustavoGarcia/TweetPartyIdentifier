@@ -46,10 +46,10 @@ def find_accuracy_for_user(api, handle, num_of_tweets, party):
     return num_correct/len(tweets)
 
 if __name__ == "__main__":
-    api = twitter.Api(consumer_key='O1TcM1r6K0hKZ7bnpjslpxaG5',
-                  consumer_secret='4gSL38BmKvs63PU3lucl7e4Gz60sTWPnnoxQ3IBO2vEjFxJI9U',
-                  access_token_key='1331694691256070144-nks9sd74IiAyt8e4CCHktQwUNTDBor',
-                  access_token_secret='iCwbCbaHfBHpJ2fs7Hov0LCGBbAQov0nEiSVbs2bgXnUV',
+    api = twitter.Api(consumer_key='',
+                  consumer_secret='',
+                  access_token_key='',
+                  access_token_secret='',
                     tweet_mode = 'extended')
 
     csv_filepath = './Generated Data/WordMembership.csv'
